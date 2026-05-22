@@ -1,0 +1,109 @@
+/* TITLES */
+.prxagnt-wrap h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+
+.prxagnt-wrap .prxagnt-version {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 3rem !important;
+}
+
+.prxagnt-wrap h2 {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #333;
+}
+
+.prxagnt-wrap h2:not(:first-child) {
+    margin-top: 5rem !important;
+}
+
+
+/* LICENSING */
+.license-status {
+    padding: 10px;
+    border-radius: 5px;
+    background: #dc3232;
+    color: white;
+    margin-top: 7px;
+    display: block;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.license-status.active {
+    background: #46b450 !important;
+    font-weight: normal !important;
+}
+
+.license-status a {
+    color: white;
+}
+
+
+/* API KEY */
+#prxagnt-api-key-display {
+    display: block;
+    width: fit-content;
+    padding: 20px 30px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7;
+    font-family: monospace;
+    font-size: 1.1rem;
+    cursor: text;
+    user-select: all;
+}
+
+.prxagnt-loader {
+    display: inline-block;
+    font-family: monospace;
+    position: relative;
+}
+
+.prxagnt-loader::after {
+    content: '.';
+    animation: prxagnt-dots 1s steps(3, end) infinite;
+}
+
+@keyframes prxagnt-dots {
+    0%   { content: '.'; }
+    33%  { content: '..'; }
+    66%  { content: '...'; }
+    100% { content: ''; }
+}
+
+.prxagnt-copy-check {
+    color: #28a745;
+    margin-left: 8px;
+    margin-top: 5px;
+    font-weight: bold;
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.prxagnt-copy-check.visible {
+    opacity: 1;
+}
+
+
+/* GENERAL */
+p.description {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: inline-block;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+    box-shadow: 1px 1px 2px #ccc;
+}
+
+#prxagnt-save-settings-btn {
+    margin-top: 5rem;
+}
