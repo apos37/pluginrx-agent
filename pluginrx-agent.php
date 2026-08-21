@@ -3,9 +3,9 @@
  * Plugin Name:         PluginRx Agent
  * Plugin URI:          https://pluginrx.com/plugin/pluginrx-agent/
  * Description:         Secure site-side agent that exposes controlled system data and maintenance actions to the PluginRx Control Center.
- * Version:             1.0.6
+ * Version:             1.1.0
  * Requires at least:   6.0
- * Tested up to:        7.0
+ * Tested up to:        7.1
  * Requires PHP:        8.0
  * Author:              PluginRx
  * Author URI:          https://pluginrx.com/
@@ -90,8 +90,8 @@ final class Bootstrap {
     private function __construct() {
         $this->meta = $this->load_meta();
         $this->check_environment();
-        add_action( 'plugins_loaded', [ $this, 'licensing' ] );
         add_action( 'plugins_loaded', [ $this, 'load_files' ] );
+        add_action( 'plugins_loaded', [ $this, 'check_for_updates' ] );
     } // End __construct()
 
 
@@ -148,40 +148,23 @@ final class Bootstrap {
 
 
     /**
-     * Initialize licensing
-     *
-     * @return void
+     * Check for plugin updates
      */
-    public function licensing() : void {
+    public function check_for_updates() : void {
+        require_once __DIR__ . '/inc/updater.php';
+
         $args = [
-            'name'            => $this->meta[ 'name' ],
-            'text_domain'     => $this->meta[ 'textdomain' ],
-            'basename'        => self::basename(),
-            'version'         => $this->meta[ 'version' ],
-            'author_uri'      => $this->meta[ 'author_uri' ],
-            'plugin_uri'      => $this->meta[ 'plugin_uri' ],
-            'settings_url'    => self::settings_url(),
-            'settings_page'   => 'prxagnt-settings',
-            'settings_screen' => 'settings_page_prxagnt-settings',
-            'prefix'          => 'prxagnt',
+            'name'        => $this->meta[ 'name' ],
+            'text_domain' => $this->meta[ 'textdomain' ],
+            'basename'    => self::basename(),
+            'version'     => $this->meta[ 'version' ],
+            'author_uri'  => $this->meta[ 'author_uri' ],
+            'plugin_uri'  => $this->meta[ 'plugin_uri' ],
+            'prefix'      => 'prxagnt',
         ];
 
-        $files = [ 'manager', 'updater', 'validator' ];
-        foreach ( $files as $file ) {
-            $path = __DIR__ . '/inc/licensing/' . $file . '.php';
-            if ( file_exists( $path ) ) {
-                require_once $path;
-            } else {
-                _doing_it_wrong(
-                    __METHOD__,
-                    sprintf( 'File not found: %s', esc_html( $path ) ),
-                    esc_html( $this->meta[ 'version' ] )
-                );
-            }
-        }
-
-        LicenseManager::init( $args );
-    } // End licensing()
+        new Updater( $args );
+    } // End check_for_updates()
 
 
     /**

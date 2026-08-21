@@ -31,11 +31,6 @@ class Remote {
      * Constructor
      */
     public function __construct() {
-        
-        // Check license validity
-        if ( ! LicenseManager::instance()->has_been_validated() ) {
-            return;
-        }
 
         // Register REST API routes
         add_action( 'rest_api_init', [ $this, 'register_routes' ] );

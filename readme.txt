@@ -2,9 +2,9 @@
 Contributors: apos37
 Tags: site management, remote access, monitoring, maintenance, api
 Requires at least: 6.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.0.6
+Stable tag: 1.1.0
 License: Proprietary
 License URI: https://pluginrx.com/proprietary-license-agreement/
 
@@ -90,6 +90,10 @@ No. Communication is handled exclusively through authenticated REST API requests
 2. PluginRx Control Center plugin dashboard showing what they see
 
 == Changelog ==
+= 1.1.0 =
+* Update: Removed license key requirement and licensing system
+* Tweak: Plugin updates now check for new versions without license validation
+
 = 1.0.6 =
 * Compatibility: Increased minimum required WordPress version to 6.0
 * Compatibility: Tested with WordPress 7.0

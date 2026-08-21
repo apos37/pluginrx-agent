@@ -64,11 +64,6 @@ class Settings {
      * @return void
      */
     public function render_page() {
-        // Licensing
-        $licensing = LicenseManager::instance();
-        $license_id = $licensing->get_license_key();
-        $license_comments = $licensing->get_license_comments();
-
         // API Key
         $api_key = sanitize_text_field( get_option( 'prxagnt_api_key', '' ) );
 
@@ -99,16 +94,6 @@ class Settings {
         <span class="prxagnt-version"><?php echo esc_html__( 'Version', 'pluginrx-agent' ) . ': ' . esc_html( Bootstrap::version() ); ?></span>
         <form method="post">
             <?php wp_nonce_field( $this->nonce_action, $this->nonce ); ?>
-
-            <h2><?php esc_html_e( 'License', 'pluginrx-agent' ); ?></h2>
-            <table class="form-table" role="presentation">
-                <tbody>
-                    <tr class="prxagnt-license-id">
-                        <th scope="row"><?php echo esc_html__( 'License ID', 'pluginrx-agent' ); ?></th>
-                        <td><input type="text" id="prxagnt-license-id" name="prxagnt_license_id" value="<?php echo esc_attr( $license_id ); ?>" style="width: 30rem;"><br><?php echo wp_kses_post( $license_comments ); ?></td>
-                    </tr>
-                </tbody>
-            </table>
 
             <h2><?php esc_html_e( 'Remote Access', 'pluginrx-agent' ); ?></h2>
             <p><?php esc_html_e( 'Enable this option to allow the Control Center to remotely access this site. Disabled by default for security. Specify the domain or comma-separated list of domains that are allowed to access this site via the Control Center. Only requests from these domains will be validated.', 'pluginrx-agent' ); ?></p>
@@ -206,12 +191,6 @@ class Settings {
             return;
         }
 
-        // License ID
-        if ( isset( $_POST[ 'prxagnt_license_id' ] ) ) {
-            $license_id = sanitize_text_field( wp_unslash( $_POST[ 'prxagnt_license_id' ] ) );
-            update_option( 'prxagnt_license_id', $license_id, false );
-        }
-
         // API Key is saved via AJAX
 
         // Permissions
@@ -287,6 +266,7 @@ class Settings {
 	/**
      * Enqueue scripts
      *
+     * @param string $hook
      * @return void
      */
     public function enqueue_scripts( $hook ) {
